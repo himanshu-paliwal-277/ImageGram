@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const postSchema = new mongoose.Schema({
     caption: {
         type: String,
-        required: true,
+        // required: true,
         minLength: 5
     },
     image: {
@@ -13,9 +13,9 @@ const postSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        // required: true
     }
-})
+}, {timestamps: true})
 
 const post = mongoose.model("Post", postSchema);
 
