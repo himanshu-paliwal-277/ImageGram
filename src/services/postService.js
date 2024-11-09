@@ -1,5 +1,4 @@
-import e from "express";
-import { createPost } from "../repositories/postRepository.js";
+import { createPost, findAllPosts, findPostById, deletePostById } from "../repositories/postRepository.js";
 
 export const createPostService = async (createPostObejct) => {
   try {
@@ -11,6 +10,36 @@ export const createPostService = async (createPostObejct) => {
     return post;
   } catch (error) {
     console.log(error);
+    return error;
+  }
+};
+
+export const getAllPostsService = async () => {
+  try {
+    const posts = await findAllPosts();
+    return posts;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const getPostByIdsService = async (id) => {
+  try {
+    const post = await deletePostById(id);
+    return post;
+  } catch (error) {
+    // console.log(error);
+    return error;
+  }
+};
+
+export const deletePostByIdService = async (id) => {
+  try {
+    const post = await findPostById(id);
+    return post;
+  } catch (error) {
+    // console.log(error);
     return error;
   }
 };

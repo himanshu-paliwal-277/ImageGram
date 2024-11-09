@@ -14,7 +14,12 @@ export const createPost = async (caption, image, user) => {
 
 export const findAllPosts = async () => {
   try {
-    const posts = await Post.find();
+    // add pagination feature that will show 10 post per page 
+    const page = 1;
+    const limit = 10;
+    const skit = (page - 1) * limit;
+    
+    const posts = await Post.find().skip(skit).limit(limit);
     return posts;
   } catch (error) {
     console.log(error);

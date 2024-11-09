@@ -1,7 +1,8 @@
 import express from "express";
 import { connectDB } from './config/dbConfig.js';
-import { createPost } from './controllers/postController.js';
-import { cloudinaryUploader  } from './config/multerConfig.js';
+// import { createPost, geAlltPosts, getPostById, deletePostById } from './controllers/postController.js';
+// import { cloudinaryUploader  } from './config/multerConfig.js';
+import apiRouter from './routes/apiRouter.js';
 
 const app = express();
 const PORT = 3000;
@@ -14,7 +15,20 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-app.post('/upload', cloudinaryUploader.single('image'), createPost);
+app.use("/api", apiRouter);
+// If the url starts with /api then the request is forwarded to the apiRouter
+
+// POST: upload a new post 
+// app.post('/upload', cloudinaryUploader.single('image'), createPost);
+
+// GET: get all the post created
+// app.get("/getAllPosts", geAlltPosts);
+
+// // GET: get post by id
+// app.get("/getPost/:id", getPostById);
+
+// // DELETE: delete post by id
+// app.delete("/deletePost/:id", deletePostById);
 
 // HW
 // Implement API's for read all posts, delete post, update post & read single post
