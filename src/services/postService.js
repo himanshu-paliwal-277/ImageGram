@@ -1,4 +1,10 @@
-import { createPost, findAllPosts, findPostById, deletePostById } from "../repositories/postRepository.js";
+import {
+  createPost,
+  findAllPosts,
+  findPostById,
+  deletePostById,
+  countAllPosts
+} from "../repositories/postRepository.js";
 
 export const createPostService = async (createPostObejct) => {
   try {
@@ -14,14 +20,19 @@ export const createPostService = async (createPostObejct) => {
   }
 };
 
-export const getAllPostsService = async () => {
-  try {
-    const posts = await findAllPosts();
-    return posts;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
+export const getAllPostsService = async (offset, limit) => {
+  const posts = await findAllPosts(offset, limit);
+
+  // Calculate total number of posts and total number of pages
+  const totalDocuments = await countAllPosts();
+
+  const totalPages = Math.ceil(totalDocuments / limit);
+
+  return {
+    posts,
+    totalPages,
+    totalDocuments,
+  };
 };
 
 export const getPostByIdsService = async (id) => {

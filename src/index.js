@@ -1,7 +1,5 @@
 import express from "express";
 import { connectDB } from './config/dbConfig.js';
-// import { createPost, geAlltPosts, getPostById, deletePostById } from './controllers/postController.js';
-// import { cloudinaryUploader  } from './config/multerConfig.js';
 import apiRouter from './routes/apiRouter.js';
 
 const app = express();
@@ -15,8 +13,8 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-app.use("/api", apiRouter);
 // If the url starts with /api then the request is forwarded to the apiRouter
+app.use("/api", apiRouter);
 
 // POST: upload a new post 
 // app.post('/upload', cloudinaryUploader.single('image'), createPost);

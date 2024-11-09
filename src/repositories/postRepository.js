@@ -12,15 +12,22 @@ export const createPost = async (caption, image, user) => {
   }
 };
 
-export const findAllPosts = async () => {
+export const findAllPosts = async (offset, limit) => {
   try {
-    // add pagination feature that will show 10 post per page 
-    const page = 1;
-    const limit = 10;
-    const skit = (page - 1) * limit;
-    
-    const posts = await Post.find().skip(skit).limit(limit);
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .skip(offset)
+      .limit(limit);
     return posts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const countAllPosts = async () => {
+  try {
+    const count = await Post.countDocuments();
+    return count;
   } catch (error) {
     console.log(error);
   }

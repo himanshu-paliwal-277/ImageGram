@@ -1,11 +1,16 @@
-import { createPostService, getAllPostsService, getPostByIdsService, deletePostByIdService } from "../services/postService.js";
+import {
+  createPostService,
+  getAllPostsService,
+  getPostByIdsService,
+  deletePostByIdService,
+} from "../services/postService.js";
 
 export async function createPost(req, res) {
   try {
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
-    
+
     console.log("req.file: ", req.file); // req.file
 
     const post = await createPostService({
@@ -29,18 +34,21 @@ export async function createPost(req, res) {
 
 export async function getAllPosts(req, res) {
   try {
-    const posts = await getAllPostsService();
+    const limit = req.query.limit || 10;
+    const offset = req.query.offset || 0;
+
+    const paginatedPosts = await getAllPostsService(offset, limit);
 
     return res.status(200).json({
       success: true,
-      message: "All Posts fetch successfully",
-      data: posts,
+      message: "All posts fetched successfully",
+      data: paginatedPosts,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
-      message: "Error occur in fetching posts",
-      error: error,
+      message: "Internal Server Error",
     });
   }
 }
@@ -73,7 +81,7 @@ export async function deletePostById(req, res) {
     return res.status(200).json({
       success: true,
       message: "Post deleted successfully",
-      data: post
+      data: post,
     });
   } catch (error) {
     return res.status(500).json({
