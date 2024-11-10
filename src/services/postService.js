@@ -3,7 +3,8 @@ import {
   findAllPosts,
   findPostById,
   deletePostById,
-  countAllPosts
+  countAllPosts,
+  updatePostById
 } from "../repositories/postRepository.js";
 
 export const createPostService = async (createPostObejct) => {
@@ -37,16 +38,6 @@ export const getAllPostsService = async (offset, limit) => {
 
 export const getPostByIdsService = async (id) => {
   try {
-    const post = await deletePostById(id);
-    return post;
-  } catch (error) {
-    // console.log(error);
-    return error;
-  }
-};
-
-export const deletePostByIdService = async (id) => {
-  try {
     const post = await findPostById(id);
     return post;
   } catch (error) {
@@ -54,3 +45,16 @@ export const deletePostByIdService = async (id) => {
     return error;
   }
 };
+
+export const deletePostService = async (id) => {
+   // call the repository function
+   const response = await deletePostById(id);
+   return response;
+};
+
+export const updatePostService = async (id, updateObject) => {
+  // call the repository function
+  // hW: try top impl the logic to delete old image from aws in case of update of post image
+  const response = await updatePostById(id, updateObject);
+  return response;
+}
