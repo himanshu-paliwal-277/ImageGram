@@ -8,8 +8,11 @@ import {
 
 export async function createPost(req, res) {
   try {
-    if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded" });
+    if (!req.file || !req.file.path) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Image is required", 
+      });
     }
     if (!req.body.caption) {
       return res.status(400).json({ message: "Caption is required" });
